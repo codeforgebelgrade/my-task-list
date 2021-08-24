@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:HP1708:SQLEXPRESS",
+      "secretStore": null
+    }
+  }
+}
