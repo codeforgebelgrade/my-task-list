@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:HP1708:SQLEXPRESS"
-    }
-  }
-}

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace toDoAPP
+namespace ToDoList
 {
     public class Program
     {
