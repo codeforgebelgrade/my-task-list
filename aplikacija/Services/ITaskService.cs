@@ -10,6 +10,8 @@ namespace Services
     public interface ITaskService
     {
         IEnumerable<Tasks> GetAll();
-        void newTask(Tasks newTask);
+        Tasks NewTask(Tasks newTask);
+        Tasks UpadateTask(Tasks updatedTask);
+        Tasks FindTask(int id);
     }
 }

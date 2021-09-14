@@ -19,10 +19,24 @@ namespace Services
             return _context.Tasks;
         }
 
-        public void newTask(Tasks newTask)
+        public Tasks FindTask(int id)
+        {
+            return _context.Tasks.Find(id);
+        }
+
+        public Tasks NewTask(Tasks newTask)
         {
             _context.Add(newTask);
             _context.SaveChanges();
+            return newTask;
+        }
+
+        public Tasks UpadateTask(Tasks updatedTask)
+        {
+            var updateTask = _context.Tasks.Attach(updatedTask);
+            updateTask.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.SaveChanges();
+            return updatedTask;
         }
     }
 }

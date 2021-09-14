@@ -32,12 +32,25 @@ namespace Controllers
         {
             if(Validation.CheckDate(task) && Validation.CheckCategory(task))
             {
-                _service.newTask(task);
+                _service.NewTask(task);
                 return new ContentResult() { Content = "OK", StatusCode = 200 };
             }
             else
             {
                 return new ContentResult() { Content = "Incorrect format", StatusCode = 400 };
+            }
+        }
+
+        [HttpPost("tasks/{taskId}")]
+        public void UpdateTask([FromRoute] int taskId, [FromBody] Tasks task)
+        {
+            Tasks oldTask = _service.FindTask(taskId);
+            if(Validation.CheckCategory(task) && Validation.CheckDate(task))
+            {
+                oldTask.Task1 = task.Task1;
+                oldTask.DueDate = task.DueDate;
+                oldTask.Description = task.Description;
+                _service.UpadateTask(oldTask);
             }
         }
         
