@@ -22,7 +22,7 @@ namespace Controllers
         }
 
         [HttpGet("tasks")]
-        public IEnumerable<Tasks> GetAll()
+        public IEnumerable<Tasks> GetAllTasks()
         {
             return _service.GetAll();
         }
