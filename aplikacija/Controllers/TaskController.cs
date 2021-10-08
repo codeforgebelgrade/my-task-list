@@ -30,28 +30,13 @@ namespace Controllers
         [HttpPost("tasks")]
         public ContentResult NewTask([FromBody] Tasks task)
         {
-            if(Validation.CheckDate(task) && Validation.CheckCategory(task))
-            {
-                _service.NewTask(task);
-                return new ContentResult() { Content = "OK", StatusCode = 200 };
-            }
-            else
-            {
-                return new ContentResult() { Content = "Incorrect format", StatusCode = 400 };
-            }
+            return _service.NewTask(task);
         }
 
         [HttpPost("tasks/{taskId}")]
-        public void UpdateTask([FromRoute] int taskId, [FromBody] Tasks task)
+        public ContentResult UpdateTask([FromRoute] int taskId, [FromBody] Tasks task)
         {
-            Tasks oldTask = _service.FindTask(taskId);
-            if(Validation.CheckCategory(task) && Validation.CheckDate(task))
-            {
-                oldTask.Task1 = task.Task1;
-                oldTask.DueDate = task.DueDate;
-                oldTask.Description = task.Description;
-                _service.UpadateTask(oldTask);
-            }
+            return _service.UpadateTask(taskId, task);
         }
         
     }

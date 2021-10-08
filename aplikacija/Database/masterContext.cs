@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -21,7 +23,7 @@ namespace ToDoList.ToDoList.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-PMA1DCL\\SQLEXPRESS;Database=master;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-SIJF4DU\\SQLEXPRESS;Database=ToDoList-DB;Trusted_Connection=True;");
             }
         }
 
@@ -42,7 +44,7 @@ namespace ToDoList.ToDoList.Database
                     .HasColumnName("description");
 
                 entity.Property(e => e.DueDate)
-                    .HasMaxLength(50)
+                    .HasColumnType("date")
                     .HasColumnName("dueDate");
 
                 entity.Property(e => e.Task1)

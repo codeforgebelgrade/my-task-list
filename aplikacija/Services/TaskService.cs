@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using ToDoList.ToDoList.Database;
+using TaskValidation;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Services
 {
@@ -24,19 +25,38 @@ namespace Services
             return _context.Tasks.Find(id);
         }
 
-        public Tasks NewTask(Tasks newTask)
+        public ContentResult NewTask(Tasks newTask)
         {
-            _context.Add(newTask);
-            _context.SaveChanges();
-            return newTask;
+            if (Validation.CheckCategory(newTask) && Validation.CheckDate(newTask)) 
+            { 
+                _context.Add(newTask);
+                _context.SaveChanges();
+                return new ContentResult() { Content = "OK", StatusCode = 200 };
+            }
+            return new ContentResult() { Content = "Incorrect format", StatusCode = 400 };
         }
 
-        public Tasks UpadateTask(Tasks updatedTask)
+        public ContentResult UpadateTask(int id ,Tasks updatedTask)
         {
-            var updateTask = _context.Tasks.Attach(updatedTask);
-            updateTask.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _context.SaveChanges();
-            return updatedTask;
+            Tasks oldTask = FindTask(id);
+            if (Validation.CheckCategory(updatedTask) && Validation.CheckDate(updatedTask)) 
+            {
+                oldTask.Task1 = updatedTask.Task1;
+                oldTask.DueDate = updatedTask.DueDate;
+                oldTask.Description = updatedTask.Description;
+                oldTask.Category = updatedTask.Category;
+                
+                var updateTask = _context.Tasks.Attach(oldTask);
+                updateTask.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.SaveChanges();
+                return new ContentResult() { Content = "OK", StatusCode = 200 };
+            }
+            else
+            {
+                return new ContentResult() { Content = "Incorrect format", StatusCode = 400 };
+            }
+
+            
         }
     }
 }
