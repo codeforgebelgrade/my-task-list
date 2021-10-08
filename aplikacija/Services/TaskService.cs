@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ToDoList.ToDoList.Database;
 using TaskValidation;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Services
 {
@@ -15,9 +16,32 @@ namespace Services
             _context = context;
         }
 
-        public IEnumerable<Tasks> GetAll()
+        public IEnumerable<Tasks> GetAll(string category , DateTime? dt = null)
         {
-            return _context.Tasks;
+            IEnumerable<Tasks> allTasks = _context.Tasks;
+            IEnumerable<Tasks> categories = _context.Tasks.Where(x => category.Equals(x.Category));
+            IEnumerable<Tasks> dates = _context.Tasks.Where(x => x.DueDate.Equals(dt));
+            IEnumerable<Tasks> result ;
+
+            if (category != null && DateTime.Equals(dt,new DateTime()))
+            {
+                result = categories;
+            }
+            else if (category == null && !DateTime.Equals(dt, new DateTime()))
+            {
+                result = dates;
+            }
+            else if (category != null && !DateTime.Equals(dt, new DateTime()))
+            {
+                result = categories.Intersect(dates);
+            }
+            else
+            {
+                result = allTasks;
+            }
+            return result;
+            //return categories;
+            //return dates;
         }
 
         public Tasks FindTask(int id)

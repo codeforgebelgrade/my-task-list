@@ -10,7 +10,7 @@ namespace Services
 {
     public interface ITaskService
     {
-        IEnumerable<Tasks> GetAll();
+        IEnumerable<Tasks> GetAll(string category = null, DateTime? dt = null);
         ContentResult NewTask(Tasks newTask);
         ContentResult UpadateTask(int id , Tasks updatedTask);
         Tasks FindTask(int id);

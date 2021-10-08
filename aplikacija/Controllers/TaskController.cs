@@ -8,6 +8,7 @@ using Services;
 using ToDoList.ToDoList.Database;
 using TaskValidation;
 
+
 namespace Controllers
 {
     [Route("my-todo-list")]
@@ -22,9 +23,9 @@ namespace Controllers
         }
 
         [HttpGet("tasks")]
-        public IEnumerable<Tasks> GetAllTasks()
+        public IEnumerable<Tasks> GetAllTasks([FromQuery] string category, [FromQuery] DateTime dt)
         {
-            return _service.GetAll();
+            return _service.GetAll(category,dt);
         }
 
         [HttpPost("tasks")]
